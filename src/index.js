@@ -10,8 +10,9 @@ import myLogger from "./middlewares/myLogger";
 import ReduxThunk from 'redux-thunk';
 import {logger} from "redux-logger/src";
 import {BrowserRouter} from "react-router-dom";
+import {composeWithDevTools} from "redux-devtools-extension";
 
-const store = createStore(rootReducer, applyMiddleware(ReduxThunk, logger));
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(ReduxThunk, logger)));
 
 ReactDOM.render(
   <BrowserRouter>
