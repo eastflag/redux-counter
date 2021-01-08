@@ -18,6 +18,31 @@ export const createPromiseThunk = (type, promiseCreator) => {
   };
 };
 
+export const handleAsyncActions = (type, key, keepData = false) => {
+  const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
+  return (state, action) => {
+    switch (action.type) {
+      case type:
+        return {
+          ...state,
+          [key]: reducerUtils.loading(keepData ? state[key].data : null)
+        };
+      case SUCCESS:
+        return {
+          ...state,
+          [key]: reducerUtils.success(action.payload)
+        };
+      case ERROR:
+        return {
+          ...state,
+          [key]: reducerUtils.error(action.error)
+        };
+      default:
+        return state;
+    }
+  };
+};
+
 
 // 리듀서에서 사용 할 수 있는 여러 유틸 함수들입니다.
 export const reducerUtils = {
